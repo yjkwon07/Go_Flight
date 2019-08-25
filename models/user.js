@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         provider: {
             type: DataTypes.STRING(10),
             allowNull: false,
+            // local vs kakao
             defaultValue: 'local',
         },
         snsId: {
@@ -23,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
     }, {
+            // 생성일, 수정일 
             timestamps: true,
+            // 삭제일(복구용)
             paranoid: true,
         });
 };

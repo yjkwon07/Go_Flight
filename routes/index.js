@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-// profile
 router.get('/profile', (req, res) => {
      res.render("profile", {
         title: "내 정보 - GoFlight",
@@ -9,16 +8,14 @@ router.get('/profile', (req, res) => {
      });
 });
 
-// join
-router.get('/', (req, res, next) => {
+router.get('/join', (req, res, next) => {
     res.render("join", {
-        title : "회원가입 - GoFlight",
-        user:null,
+        title: "회원가입 - GoFlight",
+        user: null,
         joinError: req.flash('joinError'),
     });
 });
 
-// main
 router.get('/', (req, res, next) => {
     res.render('main', {
         title: "GoFlight",
