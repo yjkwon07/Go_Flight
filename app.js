@@ -4,13 +4,16 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
 require('dotenv').config(); // process.env에 설정
 
 const indexRouter = require('./routes');
 const { sequelize } = require('./models');
+const passportConfig = require('./passport');
 
 const app = express();
 sequelize.sync();
+passportConfig(passport);
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
@@ -31,7 +34,11 @@ app.use(session({
     }
 }));
 app.use(flash());
-
+// passport 설정 초기화
+app.use(passport.initialize());
+// express session이 session을 만들고 난 후
+// passport가 session을 사용하여 사용자 정보를 저장한다.
+app.use(paseport.session());
 app.use('/', indexRouter);
 
 app.use((_req, _res, next) => {
@@ -48,4 +55,4 @@ app.use( (err, req, res, _next ) =>{
 
 app.listen(app.get('port'), () => {
     console.log(`${app.get('port')}번 포트에서 서버 실행중입니다.`);
-})
+});
