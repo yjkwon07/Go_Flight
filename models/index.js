@@ -30,18 +30,6 @@ db.Hashtag.belongsToMany(db.Post, {through: 'PostHashtag'});
 // 2. 안녕하세요. #노드 #제이드
 // 3. 안녕하세요 # 제이드 #퍼그
 
-// 1-1
-// 1-2
-// 2-1
-// 2-3
-// 3-3
-// 3-4
-
-// 1. 노드
-// 2. 익스프레스
-// 3. 제이드
-// 4. 퍼그
-
 // as: 매칭 모델 이름
 // foreignKey: 상대 테이블 아이디
 // A.belongsToMany(B, {as: 'Bname', foreignKey:'A_id'})

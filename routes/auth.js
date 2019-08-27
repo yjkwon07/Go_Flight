@@ -6,7 +6,6 @@ const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 
 const router = express.Router();
 // router.get(미들웨어1, 미들웨어2, 미들웨어3); 
-
 // Post/auth/join
 router.post('/join', isNotLoggedIn, async (req, res, next) => {
     const { email, nick, password } = req.body;
@@ -56,7 +55,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => { // req.body.email, re
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logOut();
     // req.sessiopn.destroy()는 세션을 지운다. (사실 logout시에는 안 해도 된다. 다른 세션도 같이 지워진다.)
-    req.session.destroy(); // req.user
+    // req.session.destroy(); // req.user
     res.redirect('/');
 });
 

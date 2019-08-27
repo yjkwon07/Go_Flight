@@ -17,7 +17,7 @@ module.exports = (passport) => {
         callbackURL: '/auth/kakao/callback',
     }, async (acessToken, refreshToken, profile, done) => {
         /*
-            로그인은 카카오가 대신 처리해주지만 디비에도 사용자를 저장해준다.
+            로그인은 카카오가 대신 처리해주지만 디비에 사용자를 저장해준다.
             (snsId, provider 사용)
         */
         try {
