@@ -6,7 +6,7 @@ const { Post, User } = require('../models');
 router.get('/profile', isLoggedIn, (_req, res) => {
     res.render("profile", {
         title: "내 정보 - GoFlight",
-        user: null
+        user: req.user,
     });
 });
 
@@ -27,6 +27,7 @@ router.get('/', (req, res, next) => {
         order: [['createdAt', 'DESC']],
     })
         .then((posts) => {
+            console.log(posts);
             res.render('main', {
                 title: 'GoFlight',
                 twits: posts,
