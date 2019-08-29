@@ -3,7 +3,7 @@ const router = express.Router();
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const { Post, User } = require('../models');
 
-router.get('/profile', isLoggedIn, (_req, res) => {
+router.get('/profile', isLoggedIn, (req, res) => {
     res.render("profile", {
         title: "내 정보 - GoFlight",
         user: req.user,
@@ -19,6 +19,7 @@ router.get('/join', isNotLoggedIn, (req, res, _next) => {
 });
 
 router.get('/', (req, res, next) => {
+    console.log(req.user);
     Post.findAll({
         include: {
             model: User,
@@ -27,7 +28,6 @@ router.get('/', (req, res, next) => {
         order: [['createdAt', 'DESC']],
     })
         .then((posts) => {
-            console.log(posts);
             res.render('main', {
                 title: 'GoFlight',
                 twits: posts,
