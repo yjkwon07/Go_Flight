@@ -33,8 +33,8 @@ db.Hashtag.belongsToMany(db.Post, {through: 'PostHashtag'});
 // as: 매칭 모델 이름
 // foreignKey: 상대 테이블 아이디
 // A.belongsToMany(B, {as: 'Bname', foreignKey:'A_id'})
-db.User.belongsToMany(db.User, {through: 'Follow', as : 'Followers', foreignKey: 'followongId'});
-db.User.belongsToMany(db.User, {through: 'Follow', as : 'Following', foreignKey: 'followerId'});
+db.User.belongsToMany(db.User, {through: 'Follow', as : 'Followers', foreignKey: 'followingId'});
+db.User.belongsToMany(db.User, {through: 'Follow', as : 'Followings', foreignKey: 'followerId'});
 
 // 1. 제로
 // 2. 네로
