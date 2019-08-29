@@ -20,7 +20,7 @@ router.post('/join', isNotLoggedIn, async (req, res, next) => {
         // console.timeEnd('암호화 생성 시간');
         await User.create({
             email,
-            nick : nick === null ? "쿠키" : nick,
+            nick : nick === null ? "익명" : nick,
             password: hash,
         });
         return res.redirect('/');
@@ -55,7 +55,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => { // req.body.email, re
 router.get('/logout', isLoggedIn, (req, res) => {
     req.logOut();
     // req.sessiopn.destroy()는 세션을 지운다. (사실 logout시에는 안 해도 된다. 다른 세션도 같이 지워진다.)
-    // req.session.destroy(); // req.user
+    req.session.destroy(); // req.user
     res.redirect('/');
 });
 
