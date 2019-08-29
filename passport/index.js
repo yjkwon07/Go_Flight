@@ -13,8 +13,8 @@ const { User } = require('../models');
     
     deserializeUser은 실제 서버로 들어오는 요청마다 
     세션 정보(serializeUser에서 저장됨)를 실제 DB의 데이터와 비교합니다. 
-    해당하는 유저 정보가 있으면 done의 두 번째 인자를 req.user에 저장하고, 
-    요청을 처리할 때 유저의 정보를 req.user를 통해서 넘겨줍니다. 
+    해당하는 유저 정보가 있으면 `done의 두 번째 인자를 req.user에` 저장하고, 
+    요청을 처리할 때 `유저의 정보를 req.user를 통해서 `넘겨줍니다. 
     
     serializeUser에서 done으로 넘겨주는 user가 deserializeUser의 첫 번째 매개변수로 전달되기 때문에 
     둘의 타입이 항상 일치해야 합니다. 
@@ -48,9 +48,25 @@ module.exports = (passport) => {
         //         .then(user => user[id] = user, done(null, user))
         //         .catch(err => done(err));
         // }
-        User.findOne({ where: { id } })
-            .then(user => done(null, user))
-            .catch(err => done(err));
+        User.findOne({
+            where: { id },
+            include: [{
+                model: User,
+                attributes: ['id', 'nick'],
+                as: "Followers",
+            }, {
+                model: User,
+                attributes: ['id', 'nick'],
+                as: 'Followings',
+            }],
+        })
+            .then(user => {
+                done(null, user);
+            })
+            .catch(err => {
+                console.error("passport index user error",err);
+                done(err)
+            });
     });
     local(passport);
     kakao(passport);
