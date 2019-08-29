@@ -51,6 +51,6 @@ db.User.belongsToMany(db.User, {through: 'Follow', as : 'Followings', foreignKey
 // 3. 히어로
 // 4. 바보
 db.User.belongsToMany(db.Post, {through: 'Like'});
-db.Post.belongsToMany(db.User, {through: 'Like'});
+db.Post.belongsToMany(db.User, {through: 'Like', as:"Liker"});
 
 module.exports = db;

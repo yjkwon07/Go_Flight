@@ -17,14 +17,20 @@ router.get('/join', isNotLoggedIn, (req, res, _next) => {
         joinError: req.flash('joinError'),
     });
 });
-
+/*
+    includes에서 같은 모델이 여러 개면 as로 구분한다.
+*/
 router.get('/', (req, res, next) => {
     console.log(req.user);
     Post.findAll({
-        include: {
+        include: [{
             model: User,
             attributes: ['id', 'nick'],
-        },
+        },{
+            model: User,
+            attributes: ['id', 'nick'],
+            as: 'Liker'
+        }],
         order: [['createdAt', 'DESC']],
     })
         .then((posts) => {
