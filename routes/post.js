@@ -1,19 +1,18 @@
 const express = require('express');
 const multer = require('multer');
-const mkdir = require('../public/js/publicDir');
+const publicDir = require('../public/js/publicDir');
 const path = require('path');
-
 const router = express.Router();
 const { Post, Hashtag, User } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 
 // Create folder path
-mkdir.mkdirp('./public/upload');
+publicDir.mkdirp(process.env.PUBLIC_UPLOAD);
 
 const upload = multer({
     storage: multer.diskStorage({
         destination(_req, _file, callback) {
-            callback(null, 'public/upload/');
+            callback(null, process.env.PUBLIC_UPLOAD);
         },
         filename(_req, file, callback) {
             const ext = path.extname(file.originalname);
@@ -25,6 +24,15 @@ const upload = multer({
 
 router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
     res.json({ url: `/img/${req.file.filename}` });
+});
+
+router.delete('/img/:imgname', async (req, res, next) => {
+    if (publicDir.deleteFile(process.env.PUBLIC_UPLOAD, req.params.imgname)) {
+        res.status(200).send('DELETE OK');
+    }
+    else {
+        res.status(500).send('DELETE ERROR');
+    }
 });
 
 router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
@@ -39,7 +47,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
             const new_Create_Hashtags_Arr = await Promise.all(hashtags.map(tag => Hashtag.findOrCreate({
                 where: { title: tag.slice(1).toLowerCase() },
             })));
-            await post.addHashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0])); 
+            await post.addHashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0]));
         }
         res.redirect('/');
     } catch (error) {

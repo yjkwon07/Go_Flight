@@ -19,4 +19,18 @@ const mkdirp = (dir) => {
         }
     });
 };
-module.exports = {exist, mkdirp};
+
+const deleteFile = (dir, file) => {
+    try {
+        var location = path.normalize(path.join(__dirname, '..' , '..', dir, file));
+        if(exist(location)){
+            fs.unlinkSync(location);
+        }        
+        return true;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+};
+
+module.exports = {exist, mkdirp, deleteFile};
