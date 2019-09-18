@@ -47,7 +47,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
             const new_Create_Hashtags_Arr = await Promise.all(hashtags.map(tag => Hashtag.findOrCreate({
                 where: { title: tag.slice(1).toLowerCase() },
             })));
-            await post.addHashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0]));
+            await post.addHashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0].id));
         }
         res.redirect('/');
     } catch (error) {
