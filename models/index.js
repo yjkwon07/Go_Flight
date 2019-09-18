@@ -12,7 +12,7 @@ db.Post = require('./post')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 
 db.User.hasMany(db.Post);
-db.Post.belongsTo(db.User, {as: "User", foreignKey: "userId"});
+db.Post.belongsTo(db.User, {through: 'Post', as: "User", foreignKey: "userId"});
 
 db.Post.belongsToMany(db.Hashtag, {through: 'PostHashtag', as: "Hashtag", foreignKey: 'postId'});
 db.Hashtag.belongsToMany(db.Post, {through: 'PostHashtag', as: "Post", foreignKey: 'hashtagId'});
