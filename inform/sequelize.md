@@ -20,15 +20,8 @@ Post테이블에 userId 자동 생성 (foreignKey)
 
 ```javascript
 db.User.hasMany(db.Post);
-db.Post.belongsTo(db.User, {as: "User", foreignKey: "userId"});
+db.Post.belongsTo(db.User, {through: 'Post' as: "User", foreignKey: "userId"});
 ```
-
-### foreignKey 🤔🤔🤔
-belongsTo냐 belongsToMany냐에 따라 foreignKey 방법이 달라 진다.
-
-belongsTo인 경우에는 `as랑 foreignKey모두 상대 테이블을` 가리키면 된다.
-
-belongstoMany의 경우에는 `as와 foreignKey를 반대되게` 설정하면 된다.
 
 ## 다 대 다 관계
 __다대다 관계는 belongsToMany!!(belongsTo가 아니다.)__
@@ -40,10 +33,11 @@ __as: 매칭 모델 이름__
 __foreignKey: 상대 테이블 아이디__
 
 __A.belongsToMany(B, {as: 'Bname', foreignKey:'A_id'})__
+
 ```javascript
 // PostHashtag테이블 생성
 db.Post.belongsToMany(db.Hashtag, {through: 'PostHashtag', as: "Hashtag", foreignKey: 'postId'});
-db.Hashtag.belongsToMany(db.Post, {through: 'PostHashtag' , as : "Post", foreignKey: 'hashtagId'});
+db.Hashtag.belongsToMany(db.Post, {through: 'PostHashtag' , as: "Post", foreignKey: 'hashtagId'});
 ```
 
 ```javascript
@@ -55,6 +49,20 @@ db.User.belongsToMany(db.User, {through: 'Follow', as: 'Followings', foreignKey:
 db.User.belongsToMany(db.Post, {through: 'Like', as: "Post", foreignKey: 'userId'});
 db.Post.belongsToMany(db.User, {through: 'Like', as: "Liker", foreignKey: 'postId'});
 ```
+
+### foreignKey 🤔🤔🤔
+belongsTo냐 belongsToMany냐에 따라 foreignKey 방법이 달라 진다.
+
+__참조하는 key가 무엇인지 판단한다.__
+
+belongsTo인 경우에는 `as랑 foreignKey모두 상대 테이블을` 가리키면 된다. (참조 되어 있는 key)
+
+ex) userId = 1 => Post 테이블의 userId의 값을 User테이블과 매핑
+
+belongstoMany의 경우에는 `as와 foreignKey를 반대되게` 설정하면 된다. (참조 되어있는 key의 상대 foreignKey의 값을 반환)
+
+ex) Follow 테이블의 followingId = 1 => followingId값이 1인 followerId의 값을 return후 
+    follwerId를 선언한 User 테이블과 followerId의 값을 매핑
 
 ## Sequelize Query
 
@@ -109,6 +117,16 @@ await Post.create({
             img: req.body.url,
             userId: req.user.id,
     });
+```
+
+### findOrCreate (insert)
+```javascript
+   if (hashtags) {
+            const new_Create_Hashtags_Arr = await Promise.all(hashtags.map(tag => Hashtag.findOrCreate({
+                where: { title: tag.slice(1).toLowerCase() },
+            })));
+            await post.addHashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0])); 
+        }
 ```
 
 ### destroy (delete)

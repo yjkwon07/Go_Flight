@@ -41,13 +41,13 @@ exports.isNotLoggedIn = (req, res, next) => {
 ```
 
 ## deserializeUser
-**`serializeUser에서 `** done으로 넘겨주는 user가 **`deserializeUser의`** 첫 번째 매개변수로 전달되기 때문에 **`둘의 타입이 항상 일치해야 합니다.`** 
+__`serializeUser에서 `__ done으로 넘겨주는 user가 __`deserializeUser의`__ 첫 번째 매개변수로 전달되기 때문에 __`둘의 타입이 항상 일치해야 합니다.`__
     
 __만약 serializeUser에서 user.id만 넘겨줬다면 deserializeUser의 첫 번째 매개변수도 id를 받아야 한다.__
 
 id만 있으면 그 자체로는 req.user을 만들 수 없기 때문에 __`User.findOne(id) 메소드로 완전한 user 객체를 만들어서 done을 해주면 됩니다.`__ 
 
-해당하는 유저 정보가 있으면 **`done의 두 번째 인자를 req.user에`** 저장하고, 요청을 처리할 때 __`유저의 정보를 req.user를 통해서 `넘겨줍니다.__
+해당하는 유저 정보가 있으면 __`done의 두 번째 인자를 req.user에`__ 저장하고, 요청을 처리할 때 __`유저의 정보를 req.user를 통해서 `넘겨줍니다.__
     
 ```javascript
 passport.deserializeUser((id, done) => {
