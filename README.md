@@ -1,18 +1,18 @@
 # Go_Flight
-- [nodemone]()
-- [dotenv]()
-- [flash]()
-- [passport]()
-- [sequelize]()
-- [directory]()
-- [multer]()
+- [nodemone](https://github.com/yjkwon07/Go_Flight#nodemone)
+- [dotenv](https://github.com/yjkwon07/Go_Flight#dotenv)
+- [flash](https://github.com/yjkwon07/Go_Flight#flash)
+- [passport](https://github.com/yjkwon07/Go_Flight#passport)
+- [sequelize](https://github.com/yjkwon07/Go_Flight#sequelize)
+- [directory](https://github.com/yjkwon07/Go_Flight#directory)
+- [multer](https://github.com/yjkwon07/Go_Flight#multer)
 
 ## nodemone
 - Development
 
 nodemone은 서버 코드가 바뀔 때 알아서 재시작해서 편하다.
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
 ## dotenv
 dot(.) + env여서 dotenv 
@@ -25,7 +25,7 @@ dot(.) + env여서 dotenv
     -> 보안 위험도를 줄이기 위함
 ```
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
 ## flash 
 임시로 데이터를 저장하고 페이지 이동 시 데이터 소멸 (cookie 기능)
@@ -36,25 +36,25 @@ dot(.) + env여서 dotenv
     app.use(flash());
 ```
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
 ## passport
 - [passport](https://github.com/yjkwon07/Go_Flight/blob/master/inform/passport.md)
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
 ## sequelize
 - [sequelize](https://github.com/yjkwon07/Go_Flight/blob/master/inform/sequelize.md)
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
 ## directory 
-- [directory]()
+- [directory](https://github.com/yjkwon07/Go_Flight/blob/master/inform/dircetory.md)
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
 ## multer
 - [multer](https://github.com/yjkwon07/Go_Flight/blob/master/inform/multer.md)
 
-**[위로]()**
+**[위로](https://github.com/yjkwon07/Go_Flight#go_flight)**
 
