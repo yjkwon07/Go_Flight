@@ -8,8 +8,8 @@ const router = express.Router();
 router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
     try {
         const user = await User.findOne({ where: { id: req.user.id } });
-        await user.addFollowings(parseInt(req.params.id, 10));
-        res.send('Follow_OK');
+        await user.addFollow_Followings(parseInt(req.params.id, 10));
+        res.status(200).send('Follow_OK');
     } catch (error) {
         console.error(error);
         next(error);
@@ -19,8 +19,8 @@ router.post('/:id/follow', isLoggedIn, async (req, res, next) => {
 router.post('/:id/unfollow', isLoggedIn, async (req, res, next) => {
     try {
         const user = await User.findOne({ where: { id: req.user.id } });
-        await user.removeFollowings(parseInt(req.params.id, 10));
-        res.send('UnFollow_OK');
+        await user.removeFollow_Followers(parseInt(req.params.id, 10));
+        res.status(200).send('UnFollow_OK');
     } catch (error) {
         console.error(error);
         next(error);
