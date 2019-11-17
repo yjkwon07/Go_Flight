@@ -23,9 +23,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('port', process.env.PORT || 8001);
 
 app.use(morgan('dev'));
-app.use('/static',express.static(path.join(__dirname, 'public')));
-app.use('/js', express.static(path.join(__dirname, '/public/js')));
-app.use('/img', express.static(path.join(__dirname, '/public/upload')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
