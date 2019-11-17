@@ -25,7 +25,7 @@ block content
           // 게시글 id
           input.twit-id(type='hidden' value=twit.id)
           .twit-author=twit.User.nick
-          -const follow = user && user.Followings.map(f => f.id).includes(twit.User.id);
+          -const follow = user && user.Follow_Followers.map(f => f.id).includes(twit.User.id);
           if user && user.id !== twit.User.id && !follow
             button.twit-follow 팔로우하기
           else if user && user.id !== twit.User.id && follow
@@ -34,7 +34,7 @@ block content
           if twit.img
             .twit-img
               img(src=twit.img alt='섬네일')
-          -const like = user && twit && twit.Liker && twit.Liker.map(liker => liker.id).includes(user.id);
+          -const like = user && twit && twit.Like_Liker && twit.Like_Liker.map(liker => liker.id).includes(user.id);
           if user && !like
             button.like Like
           else if user && like

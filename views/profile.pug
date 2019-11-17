@@ -4,13 +4,13 @@ block content
   .timeline
     .followings.half
       h2 팔로잉 목록
-      if user.Followings
-        for following in user.Followings
+      if user.Follow_Followings
+        for following in user.Follow_Followings
           div= following.nick
     .followers.half
       h2 팔로워 목록
-      if user.Followers
-        for follower in user.Followers
+      if user.Follow_Followers
+        for follower in user.Follow_Followers
           div= follower.nick
     form#profile-form(method='post', action='/user/profile')
       input(name='nick')
