@@ -1,29 +1,28 @@
 if (document.getElementById('img')) {
-    document.getElementById('img').addEventListener('change', function (e) {
+    document.getElementById('img').addEventListener('change', function (_event) {
         var xhr = new XMLHttpRequest();
-        var check = document.getElementById('img-prev').value;
-        var self = this;
-        if(check) {
+        var filename = document.getElementById('img-prev').value;
+        if(filename) {
             xhr.onload = function () {
                 if (xhr.status === 200) {
-                    upload(self);
+                    upload(this.files[0]);
                 } else {
                     console.error(xhr.responseText);
                 }
             }; 
-            xhr.open('DELETE', `/post${check}`);
+            xhr.open('DELETE', `/post${filename}`);
             xhr.send();            
         }
         else {
-            upload(self);
+            upload(this.files[0]);
         }
     });
 }
 
-function upload(self) {
+function upload(file) {
     var xhr = new XMLHttpRequest();
     var formData = new FormData();
-    formData.append('img', self.files[0]);
+    formData.append('img', file);
     xhr.onload = function () {
         if (xhr.status === 200) {
             var url = JSON.parse(xhr.responseText).url;
