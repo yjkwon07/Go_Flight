@@ -27,7 +27,7 @@ router.get('/', (req, res, next) => {
         },{
             model: User,
             attributes: ['id', 'nick'],
-            as: 'Liker'
+            as: 'Like_Liker'
         }],
         order: [['createdAt', 'DESC']],
     })

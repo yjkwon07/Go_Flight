@@ -26,7 +26,7 @@ router.post('/img', isLoggedIn, upload.single('img'), (req, res) => {
     res.json({ url: `/img/${req.file.filename}` });
 });
 
-router.delete('/img/:imgname', async (req, res, next) => {
+router.delete('/img/:imgname', (req, res, next) => {
     if (publicDir.deleteFile(process.env.PUBLIC_UPLOAD, req.params.imgname)) {
         res.status(200).send('DELETE OK');
     }
@@ -47,7 +47,7 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
             const new_Create_Hashtags_Arr = await Promise.all(hashtags.map(tag => Hashtag.findOrCreate({
                 where: { title: tag.slice(1).toLowerCase() },
             })));
-            await post.addHashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0].id));
+            await post.addPostHashtag_Hashtag(new_Create_Hashtags_Arr.map(find_HashtagId => find_HashtagId[0].id));
         }
         res.redirect('/');
     } catch (error) {
@@ -65,7 +65,7 @@ router.get('/hashtag', async (req, res, next) => {
         const hashtag = await Hashtag.findOne({ where: { title: query } });
         let posts = [];
         if (hashtag) {
-            posts = await hashtag.getPost({ include: [{ model: User, as: "User" }] });
+            posts = await hashtag.getPostHashtag_Post({ include: [{ model: User, as: "User" }] });
         }
         return res.render('main', {
             title: `${query} | GoFlight`,
@@ -86,7 +86,7 @@ router.delete('/:id', async (req, res, next) => {
                 userId: req.user.id,
             },
         });
-        res.send('Post_Delete_OK');
+        res.status(200).send('Post_Delete_OK');
     } catch (error) {
         console.error(error);
         next(error);
@@ -96,7 +96,7 @@ router.delete('/:id', async (req, res, next) => {
 router.post('/:id/like', async (req, res, next) => {
     try {
         const post = await Post.findOne({ where: { id: req.params.id } });
-        await post.addLiker(req.user.id);
+        await post.addLike_Liker(req.user.id);
         res.send('Post_Like_OK');
     } catch (error) {
         console.error(error);
@@ -107,7 +107,7 @@ router.post('/:id/like', async (req, res, next) => {
 router.delete('/:id/like', async (req, res, next) => {
     try {
         const post = await Post.findOne({ where: { id: req.params.id } });
-        await post.removeLiker(req.user.id);
+        await post.removeLike_Liker(req.user.id);
         res.send('Post_Like_Delete_OK');
     } catch (error) {
         console.error(error);

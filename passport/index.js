@@ -13,11 +13,11 @@ module.exports = (passport) => {
             include: [{
                 model: User,
                 attributes: ['id', 'nick'],
-                as: "Followers",
+                as: "Follow_Followers",
             }, {
                 model: User,
                 attributes: ['id', 'nick'],
-                as: 'Followings',
+                as: 'Follow_Followings',
             }],
         })
             .then(user => {
