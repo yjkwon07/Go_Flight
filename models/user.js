@@ -28,5 +28,7 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: true,
             // 삭제일(복구용)
             paranoid: true,
+            charset: 'utf8',
+            collage:'utf8_genral_ci',
         });
 };
