@@ -1,5 +1,7 @@
 # sequelize 
 
+## [공식 문서](https://doc.esdoc.org/github.com/sequelize/sequelize/manual/associations.html)
+
 ## 1 대 1 관계
 **주가 되는 1이 먼저 나와야 한다.**
 ```javascript
@@ -17,8 +19,6 @@
 
 Post테이블에 userId 자동 생성 (foreignKey)
 
-**`through`** : table 참조 
-
 **`as`** : 별칭 설정 (alias) (default:  name of Table what sourceKey)
 - sequelize에서 사용되는 `include에서` 사용되는 as와 `foreignKey`(ex. Post.getUser({})) 참조 구문에서 사용된다. 
 
@@ -28,9 +28,11 @@ Post테이블에 userId 자동 생성 (foreignKey)
 
 **`targetKey`** : sourceKey 에서 사용되는 key (default : sourceKey -> (primaryKey))
 
+> The target key is the column on the target model that the foreign key column on the source model points to. By default the target key for a belongsTo relation will be the target model's primary key. To define a custom column, use the targetKey option.
+
 ```javascript
-    db.User.hasMany(db.Post, { foreignKey: 'userId', sourceKey: 'id' }); // foreignKey: Post.userId, sourceKey: User.id
-    db.Post.belongsTo(db.User, { through: 'Post', as: 'User', foreignKey: 'userId', targetKey: 'id' }); // foreignKey: User.userId, sourceKey: Post.id
+    db.User.hasMany(db.Post, { foreignKey: 'userId', sourceKey: 'id' }); // foreignKey: Post.userId, sourceKey: User.id // Will add userId to Post model
+    db.Post.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'id' }); // foreignKey: Post.userId, targetKey: User.id // // Will also add userId to Post model
 ```
 
 ## 다 대 다 관계
@@ -42,7 +44,6 @@ Post테이블에 userId 자동 생성 (foreignKey)
         through: 'newTable', 
         as: '(alias)', 
         foreignKey:'A_id(DB of alias)', 
-        sourceKey: 'A_id(default -> primarykey)'
     } )
 ```
 
@@ -74,16 +75,6 @@ ex).
     db.User.hasMany(db.Post, { foreignKey: 'userId', sourceKey: 'id' });
     db.Post.belongsTo(db.User, { through: 'Post', as: 'User', foreignKey: 'userId', targetKey: 'id' });
 ```
-
-belongstoMany의 경우에는 **`첫번째 인자의 table과 foreignKey를 반대되게`** 설정하면 된다. **(참조 되어있는 key의 상대 foreignKey의 값을 반환)**
-
-ex).
-```javascript
-    // PostHashtag테이블 생성
-    db.Post.belongsToMany(db.Hashtag, { through: 'PostHashtag', as: 'Hashtag', foreignKey: 'postId' });
-    db.Hashtag.belongsToMany(db.Post, { through: 'PostHashtag', as: 'Post', foreignKey: 'hashtagId' });
-```
-![sequelize_mapping](./sequelize_mapping.png)
 
 ## Sequelize Query
 
@@ -210,9 +201,6 @@ followerId <- followingId (나를 팔로잉 하는 유저들)
 `followingId`: req.params.id (상대방 id)
 
 `followerId`: req.user.id (자신 id)
-
-followerId -> followingId (내가 팔로워 하는 유저들)
-followerId <- followingId (나를 팔로잉 하는 유저들)
 
 ```javascript
     db.User.belongsToMany(db.User, { through: 'Follow', as: 'Follow_Followers', foreignKey: 'followingId' });
