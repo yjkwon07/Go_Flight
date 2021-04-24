@@ -29,8 +29,8 @@ Post테이블에 userId 자동 생성 (foreignKey)
 **`targetKey`** : sourceKey 에서 사용되는 key (default : sourceKey -> (primaryKey))
 
 ```javascript
-    db.User.hasMany(db.Post, { foreignKey: 'userId', sourceKey: 'id' });
-    db.Post.belongsTo(db.User, { through: 'Post', as: 'User', foreignKey: 'userId', targetKey: 'id' });
+    db.User.hasMany(db.Post, { foreignKey: 'userId', sourceKey: 'id' }); // foreignKey: Post.userId, sourceKey: User.id
+    db.Post.belongsTo(db.User, { through: 'Post', as: 'User', foreignKey: 'userId', targetKey: 'id' }); // foreignKey: User.userId, sourceKey: Post.id
 ```
 
 ## 다 대 다 관계
